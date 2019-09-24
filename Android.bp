@@ -3,7 +3,6 @@ rust_proc_macro {
     crate_name: "remain",
     srcs: ["src/lib.rs",],
     edition: "2018",
-    host_supported: true,
     rlibs: [
         "libquote",
         "libsyn",
