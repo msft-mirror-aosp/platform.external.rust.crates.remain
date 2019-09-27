@@ -1,5 +1,6 @@
 rust_proc_macro {
     name: "libremain",
+    deny_warnings: false,
     crate_name: "remain",
     srcs: ["src/lib.rs",],
     edition: "2018",
