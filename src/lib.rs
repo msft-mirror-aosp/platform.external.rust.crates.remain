@@ -135,8 +135,11 @@
 //! # fn main() {}
 //! ```
 
+#![allow(clippy::needless_doctest_main)]
+
 extern crate proc_macro;
 
+mod atom;
 mod check;
 mod compare;
 mod emit;
@@ -153,15 +156,16 @@ use crate::parse::{Input, Nothing};
 
 #[proc_macro_attribute]
 pub fn sorted(args: TokenStream, input: TokenStream) -> TokenStream {
-    let original = input.clone();
-
     let _ = parse_macro_input!(args as Nothing);
-    let input = parse_macro_input!(input as Input);
+    let mut input = parse_macro_input!(input as Input);
     let kind = input.kind();
 
-    match check::sorted(input) {
-        Ok(()) => original,
-        Err(err) => emit(err, kind, original),
+    let result = check::sorted(&mut input);
+    let output = TokenStream::from(quote!(#input));
+
+    match result {
+        Ok(_) => output,
+        Err(err) => emit(err, kind, output),
     }
 }
 
