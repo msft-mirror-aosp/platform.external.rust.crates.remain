@@ -14,5 +14,6 @@ third_party {
     value: "https://github.com/dtolnay/remain"
   }
   version: "0.2.1"
+  license_type: NOTICE
   last_upgrade_date { year: 2020 month: 3 day: 5 }
 }
