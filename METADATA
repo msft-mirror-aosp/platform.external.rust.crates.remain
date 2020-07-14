@@ -1,9 +1,5 @@
 name: "remain"
-description:
-    "This crate provides an attribute macro to check at compile time that the "
-    "variants of an enum or the arms of a match expression are written in "
-    "sorted order."
-
+description: "This crate provides an attribute macro to check at compile time that the variants of an enum or the arms of a match expression are written in sorted order."
 third_party {
   url {
     type: HOMEPAGE
@@ -13,7 +9,11 @@ third_party {
     type: GIT
     value: "https://github.com/dtolnay/remain"
   }
-  version: "0.2.1"
+  version: "0.2.2"
   license_type: NOTICE
-  last_upgrade_date { year: 2020 month: 3 day: 5 }
+  last_upgrade_date {
+    year: 2020
+    month: 7
+    day: 10
+  }
 }
