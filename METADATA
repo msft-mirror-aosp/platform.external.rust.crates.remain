@@ -6,8 +6,8 @@ third_party {
     value: "https://crates.io/crates/remain"
   }
   url {
-    type: GIT
-    value: "https://github.com/dtolnay/remain"
+    type: ARCHIVE
+    value: "https://static.crates.io/crates/remain/remain-0.2.2.crate"
   }
   version: "0.2.2"
   license_type: NOTICE
