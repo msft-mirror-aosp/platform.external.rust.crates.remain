@@ -1,5 +1,5 @@
 name: "remain"
-description: "This crate provides an attribute macro to check at compile time that the variants of an enum or the arms of a match expression are written in sorted order."
+description: "Compile-time checks that an enum, struct, or match is written in sorted order."
 third_party {
   url {
     type: HOMEPAGE
