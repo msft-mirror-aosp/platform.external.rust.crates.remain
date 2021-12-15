@@ -2,6 +2,29 @@
 {
   "presubmit": [
     {
+      "name": "ZipFuseTest"
+    },
+    {
+      "name": "apkdmverity.test"
+    },
+    {
+      "name": "authfs_device_test_src_lib"
+    },
+    {
+      "name": "virtualizationservice_device_test"
+    }
+  ],
+  "presubmit-rust": [
+    {
+      "name": "ZipFuseTest"
+    },
+    {
+      "name": "apkdmverity.test"
+    },
+    {
+      "name": "authfs_device_test_src_lib"
+    },
+    {
       "name": "virtualizationservice_device_test"
     }
   ]
