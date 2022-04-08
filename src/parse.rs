@@ -1,5 +1,4 @@
-use proc_macro2::{Span, TokenStream};
-use quote::ToTokens;
+use proc_macro2::Span;
 use syn::parse::{Parse, ParseStream};
 use syn::{Attribute, Error, Expr, Fields, Result, Stmt, Token, Visibility};
 
@@ -16,7 +15,7 @@ impl Parse for Nothing {
 pub enum Input {
     Enum(syn::ItemEnum),
     Match(syn::ExprMatch),
-    Struct(syn::ItemStruct),
+    Struct(syn::FieldsNamed),
     Let(syn::ExprMatch),
 }
 
@@ -33,10 +32,9 @@ impl Input {
 
 impl Parse for Input {
     fn parse(input: ParseStream) -> Result<Self> {
-        let ahead = input.fork();
-        let _ = ahead.call(Attribute::parse_outer)?;
+        let _ = input.call(Attribute::parse_outer)?;
 
-        if ahead.peek(Token![match]) {
+        if input.peek(Token![match]) {
             let expr = match input.parse()? {
                 Expr::Match(expr) => expr,
                 _ => unreachable!("expected match"),
@@ -44,7 +42,7 @@ impl Parse for Input {
             return Ok(Input::Match(expr));
         }
 
-        if ahead.peek(Token![let]) {
+        if input.peek(Token![let]) {
             let stmt = match input.parse()? {
                 Stmt::Local(stmt) => stmt,
                 _ => unreachable!("expected let"),
@@ -60,27 +58,18 @@ impl Parse for Input {
             return Ok(Input::Let(expr));
         }
 
+        let ahead = input.fork();
         let _: Visibility = ahead.parse()?;
         if ahead.peek(Token![enum]) {
             return input.parse().map(Input::Enum);
         } else if ahead.peek(Token![struct]) {
             let input: syn::ItemStruct = input.parse()?;
-            if let Fields::Named(_) = &input.fields {
-                return Ok(Input::Struct(input));
+            if let Fields::Named(fields) = input.fields {
+                return Ok(Input::Struct(fields));
             }
         }
 
         Err(unexpected())
-    }
-}
-
-impl ToTokens for Input {
-    fn to_tokens(&self, tokens: &mut TokenStream) {
-        match self {
-            Input::Enum(item) => item.to_tokens(tokens),
-            Input::Struct(item) => item.to_tokens(tokens),
-            Input::Match(expr) | Input::Let(expr) => expr.to_tokens(tokens),
-        }
     }
 }
 

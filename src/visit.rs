@@ -64,16 +64,14 @@ fn take_sorted_attr(attrs: &mut Vec<Attribute>) -> bool {
 }
 
 fn check_and_insert_error(input: ExprMatch, out: &mut Expr) {
-    let mut input = Input::Match(input);
+    let original = quote!(#input);
+    let input = Input::Match(input);
 
-    *out = match crate::check::sorted(&mut input) {
-        Ok(_) => parse_quote!(#input),
-        Err(err) => {
-            let err = err.to_compile_error();
-            parse_quote!({
-                #err
-                #input
-            })
-        }
-    };
+    if let Err(err) = crate::check::sorted(input) {
+        let err = err.to_compile_error();
+        *out = parse_quote!({
+            #err
+            #original
+        });
+    }
 }

@@ -1,68 +1,45 @@
 use proc_macro2::Ident;
 use std::cmp::Ordering;
 
-use crate::atom::iter_atoms;
-
-#[derive(Copy, Clone, PartialEq)]
-pub enum UnderscoreOrder {
-    First,
-    Last,
-}
-
+#[derive(PartialEq, Eq)]
 pub struct Path {
     pub segments: Vec<Ident>,
 }
 
-pub fn cmp(lhs: &Path, rhs: &Path, mode: UnderscoreOrder) -> Ordering {
-    // Lexicographic ordering across path segments.
-    for (lhs, rhs) in lhs.segments.iter().zip(&rhs.segments) {
-        match cmp_segment(&lhs.to_string(), &rhs.to_string(), mode) {
-            Ordering::Equal => {}
-            non_eq => return non_eq,
-        }
+impl PartialOrd for Path {
+    fn partial_cmp(&self, other: &Path) -> Option<Ordering> {
+        Some(self.cmp(other))
     }
-
-    lhs.segments.len().cmp(&rhs.segments.len())
 }
 
-fn cmp_segment(lhs: &str, rhs: &str, mode: UnderscoreOrder) -> Ordering {
-    // Sort `_` last.
-    match (lhs, rhs) {
-        ("_", "_") => return Ordering::Equal,
-        ("_", _) => return Ordering::Greater,
-        (_, "_") => return Ordering::Less,
-        (_, _) => {}
-    }
-
-    let mut lhs_atoms = iter_atoms(lhs);
-    let mut rhs_atoms = iter_atoms(rhs);
-
-    // Path segments can't be empty.
-    let mut left = lhs_atoms.next().unwrap();
-    let mut right = rhs_atoms.next().unwrap();
-
-    if mode == UnderscoreOrder::Last {
-        // Compare leading underscores.
-        match left.underscores().cmp(&right.underscores()) {
-            Ordering::Equal => {}
-            non_eq => return non_eq,
-        }
-    }
-
-    loop {
-        match left.cmp(&right) {
-            Ordering::Equal => {}
-            non_eq => return non_eq,
-        }
-
-        match (lhs_atoms.next(), rhs_atoms.next()) {
-            (None, None) => return Ordering::Equal,
-            (None, Some(_)) => return Ordering::Less,
-            (Some(_), None) => return Ordering::Greater,
-            (Some(nextl), Some(nextr)) => {
-                left = nextl;
-                right = nextr;
+impl Ord for Path {
+    fn cmp(&self, other: &Path) -> Ordering {
+        // Lexicographic ordering across path segments.
+        for (lhs, rhs) in self.segments.iter().zip(&other.segments) {
+            match cmp(&lhs.to_string(), &rhs.to_string()) {
+                Ordering::Equal => {}
+                non_eq => return non_eq,
             }
         }
+
+        self.segments.len().cmp(&other.segments.len())
     }
+}
+
+// TODO: more intelligent comparison
+// for example to handle numeric cases like E9 < E10.
+fn cmp(lhs: &str, rhs: &str) -> Ordering {
+    // Sort `_` last.
+    match (lhs == "_", rhs == "_") {
+        (true, true) => return Ordering::Equal,
+        (true, false) => return Ordering::Greater,
+        (false, true) => return Ordering::Less,
+        (false, false) => {}
+    }
+
+    let lhs = lhs.to_ascii_lowercase();
+    let rhs = rhs.to_ascii_lowercase();
+
+    // For now: asciibetical ordering.
+    lhs.cmp(&rhs)
 }
