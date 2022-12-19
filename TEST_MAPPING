@@ -11,6 +11,9 @@
       "name": "authfs_device_test_src_lib"
     },
     {
+      "name": "libdm_rust.test"
+    },
+    {
       "name": "virtualizationservice_device_test"
     }
   ],
@@ -23,6 +26,9 @@
     },
     {
       "name": "authfs_device_test_src_lib"
+    },
+    {
+      "name": "libdm_rust.test"
     },
     {
       "name": "virtualizationservice_device_test"
