@@ -1,5 +1,10 @@
 {
-  "patch": "patches/Android.bp.patch",
+  "dependency-blocklist": [
+    "trybuild"
+  ],
+  "test-blocklist": [
+    "tests/compiletest.rs"
+  ],
   "run": true,
   "tests": true
 }
