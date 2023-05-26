@@ -1,3 +1,7 @@
+# This project was upgraded with external_updater.
+# Usage: tools/external_updater/updater.sh update rust/crates/remain
+# For more info, check https://cs.android.com/android/platform/superproject/+/master:tools/external_updater/README.md
+
 name: "remain"
 description: "Compile-time checks that an enum, struct, or match is written in sorted order."
 third_party {
@@ -7,14 +11,13 @@ third_party {
   }
   url {
     type: ARCHIVE
-    value: "https://static.crates.io/crates/remain/remain-0.2.6.crate"
+    value: "https://static.crates.io/crates/remain/remain-0.2.8.crate"
   }
-  version: "0.2.6"
-  # Dual-licensed, using the least restrictive per go/thirdpartylicenses#same.
+  version: "0.2.8"
   license_type: NOTICE
   last_upgrade_date {
-    year: 2022
-    month: 12
-    day: 19
+    year: 2023
+    month: 3
+    day: 27
   }
 }

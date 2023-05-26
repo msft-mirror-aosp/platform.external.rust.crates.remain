@@ -41,7 +41,7 @@ rust_proc_macro {
     name: "libremain",
     crate_name: "remain",
     cargo_env_compat: true,
-    cargo_pkg_version: "0.2.6",
+    cargo_pkg_version: "0.2.8",
     srcs: ["src/lib.rs"],
     edition: "2018",
     rustlibs: [
@@ -57,7 +57,7 @@ rust_defaults {
     name: "remain_test_defaults",
     crate_name: "remain",
     cargo_env_compat: true,
-    cargo_pkg_version: "0.2.6",
+    cargo_pkg_version: "0.2.8",
     test_suites: ["general-tests"],
     auto_gen_config: true,
     edition: "2018",
