@@ -143,9 +143,11 @@
 //! # fn main() {}
 //! ```
 
+#![doc(html_root_url = "https://docs.rs/remain/0.2.8")]
 #![allow(
     clippy::derive_partial_eq_without_eq,
     clippy::enum_glob_use,
+    clippy::let_underscore_untyped,
     clippy::manual_find,
     clippy::match_same_arms,
     clippy::module_name_repetitions,
