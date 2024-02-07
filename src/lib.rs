@@ -143,7 +143,7 @@
 //! # fn main() {}
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/remain/0.2.8")]
+#![doc(html_root_url = "https://docs.rs/remain/0.2.12")]
 #![allow(
     clippy::derive_partial_eq_without_eq,
     clippy::enum_glob_use,
@@ -183,7 +183,7 @@ pub fn sorted(args: TokenStream, input: TokenStream) -> TokenStream {
     let output = TokenStream::from(quote!(#input));
 
     match result {
-        Ok(_) => output,
+        Ok(()) => output,
         Err(err) => emit(&err, kind, output),
     }
 }
