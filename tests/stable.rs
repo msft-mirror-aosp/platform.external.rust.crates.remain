@@ -1,6 +1,8 @@
 #![allow(dead_code)]
 #![allow(
     clippy::derive_partial_eq_without_eq,
+    clippy::extra_unused_type_parameters,
+    clippy::let_underscore_untyped,
     clippy::let_unit_value,
     clippy::match_same_arms
 )]
@@ -48,7 +50,7 @@ fn test_let() {
     let value = TestEnum::A;
 
     #[sorted]
-    let _ = match value {
+    let () = match value {
         TestEnum::A => {}
         #[remain::unsorted]
         TestEnum::Ignored => {}
