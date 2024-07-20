@@ -55,6 +55,7 @@ rust_proc_macro {
 
 rust_test_host {
     name: "remain_test_tests_stable",
+    host_cross_supported: false,
     crate_name: "stable",
     cargo_env_compat: true,
     cargo_pkg_version: "0.2.12",
@@ -78,6 +79,7 @@ rust_test_host {
 
 rust_test_host {
     name: "remain_test_tests_unstable",
+    host_cross_supported: false,
     crate_name: "unstable",
     cargo_env_compat: true,
     cargo_pkg_version: "0.2.12",
